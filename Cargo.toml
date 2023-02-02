@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "munin",
+    "markdown_fn"
+]
