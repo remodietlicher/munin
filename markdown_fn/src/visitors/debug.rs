@@ -97,7 +97,13 @@ impl MarkdownASTVisitor for DebugVisitor {
         });
     }
     fn visit_list_item(&self, list_item: &mdast::ListItem) -> Self::Result {
-        println!("Visited ListItem, it is checked? {:?}", list_item.checked);
+        let tmp = list_item.clone();
+        let node = mdast::Node::ListItem(tmp);
+        println!(
+            "Visited ListItem, it is checked? {:?}, content: {:?}",
+            list_item.checked,
+            node.to_string()
+        );
         list_item.children.iter().for_each(|c| {
             c.accept(self);
         });
