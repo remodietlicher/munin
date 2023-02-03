@@ -15,8 +15,8 @@ pub fn debug() -> Result<(), String> {
         let mdast = markdown::to_mdast(&md_file[..], &options)?;
         println!("{:?}", mdast);
 
-        let visitor = visitors::debug::DebugVisitor {};
-        mdast.accept(&visitor);
+        let mut visitor = visitors::debug::DebugVisitor {};
+        mdast.accept(&mut visitor);
     }
 
     Ok(())

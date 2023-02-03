@@ -6,19 +6,19 @@ use super::{visitable::Visitable, visitor::Visitor};
 pub struct DebugVisitor;
 
 impl DebugVisitor {
-    fn visit_root(&self, root: &mdast::Root) -> () {
+    fn visit_root(&mut self, root: &mdast::Root) -> () {
         println!("Visited Root");
         root.children.iter().for_each(|c| {
             c.accept(self);
         });
     }
-    fn visit_list(&self, list: &mdast::List) -> () {
+    fn visit_list(&mut self, list: &mdast::List) -> () {
         println!("Visited List");
         list.children.iter().for_each(|c| {
             c.accept(self);
         });
     }
-    fn visit_text(&self, text: &mdast::Text) -> () {
+    fn visit_text(&mut self, text: &mdast::Text) -> () {
         println!("Visited Text with value {:?}", text.value);
     }
     fn visit_yaml(&self, yaml: &mdast::Yaml) -> () {
@@ -30,31 +30,31 @@ impl DebugVisitor {
             Err(e) => panic!("failed to parse yaml: {:?}", e),
         }
     }
-    fn visit_emphasis(&self, emphasis: &mdast::Emphasis) -> () {
+    fn visit_emphasis(&mut self, emphasis: &mdast::Emphasis) -> () {
         println!("Visited Emphasis");
         emphasis.children.iter().for_each(|c| {
             c.accept(self);
         });
     }
-    fn visit_link(&self, _link: &mdast::Link) -> () {
+    fn visit_link(&mut self, _link: &mdast::Link) -> () {
         println!("Visited Link")
     }
-    fn visit_strong(&self, strong: &mdast::Strong) -> () {
+    fn visit_strong(&mut self, strong: &mdast::Strong) -> () {
         println!("Visited Strong");
         strong.children.iter().for_each(|c| {
             c.accept(self);
         });
     }
-    fn visit_code(&self, code: &mdast::Code) -> () {
+    fn visit_code(&mut self, code: &mdast::Code) -> () {
         println!("Visited Code with lang {:?}", code.lang)
     }
-    fn visit_heading(&self, heading: &mdast::Heading) -> () {
+    fn visit_heading(&mut self, heading: &mdast::Heading) -> () {
         println!("Visited Heading");
         heading.children.iter().for_each(|c| {
             c.accept(self);
         });
     }
-    fn visit_list_item(&self, list_item: &mdast::ListItem) -> () {
+    fn visit_list_item(&mut self, list_item: &mdast::ListItem) -> () {
         let tmp = list_item.clone();
         let node = mdast::Node::ListItem(tmp);
         println!(
@@ -66,20 +66,20 @@ impl DebugVisitor {
             c.accept(self);
         });
     }
-    fn visit_paragraph(&self, paragraph: &mdast::Paragraph) -> () {
+    fn visit_paragraph(&mut self, paragraph: &mdast::Paragraph) -> () {
         println!("Visited Paragraph");
         paragraph.children.iter().for_each(|c| {
             c.accept(self);
         });
     }
-    fn visit_default(&self) -> () {
+    fn visit_default(&mut self) -> () {
         println!("visited unimplemented node!")
     }
 }
 
 impl Visitor for DebugVisitor {
     type Result = ();
-    fn visit(&self, node: &mdast::Node) -> Self::Result {
+    fn visit(&mut self, node: &mdast::Node) -> Self::Result {
         match node {
             mdast::Node::Root(root) => self.visit_root(root),
             mdast::Node::List(list) => self.visit_list(list),
