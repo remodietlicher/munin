@@ -1,4 +1,8 @@
+use markdown::mdast::Node::ListItem;
+
+use crate::traits::filter::Filter;
 use crate::visitors::visitable::Visitable;
+pub mod traits;
 mod visitors;
 
 pub fn add(left: usize, right: usize) -> usize {
@@ -17,6 +21,10 @@ pub fn debug() -> Result<(), String> {
 
         let mut visitor = visitors::debug::DebugVisitor {};
         mdast.accept(&mut visitor);
+
+        let lists = mdast.filter(&|node| -> bool { matches!(node, ListItem(_)) });
+        let string_lists: Vec<String> = lists.iter().map(|n| n.to_string()).collect();
+        println!("{:?}", string_lists);
     }
 
     Ok(())
