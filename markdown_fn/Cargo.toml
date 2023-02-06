@@ -6,5 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-markdown = "=1.0.0-alpha.5"
+markdown = {path = "/home/remo/code/markdown-rs"}
 serde_yaml = "0.9.17"

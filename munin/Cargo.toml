@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 markdown_fn = {path = "../markdown_fn"}
+markdown = {path = "/home/remo/code/markdown-rs"}
+rsmgclient = "1.0.0"
+clap = { version = "4.0", features = ["derive"] }

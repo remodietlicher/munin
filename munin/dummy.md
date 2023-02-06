@@ -17,6 +17,7 @@ fn do_something() {
 Here are a few points that I like about markdown:
 
 - quick to write
+  - quick sublist
 - amazing support by the Rust community
 
 To finish this project, there is alot to do:

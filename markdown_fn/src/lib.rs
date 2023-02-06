@@ -1,4 +1,4 @@
-use markdown::mdast::Node::ListItem;
+use markdown::mdast::Node;
 
 use crate::traits::filter::Filter;
 use crate::visitors::visitable::Visitable;
@@ -22,9 +22,17 @@ pub fn debug() -> Result<(), String> {
         let mut visitor = visitors::debug::DebugVisitor {};
         mdast.accept(&mut visitor);
 
-        let lists = mdast.filter(&|node| -> bool { matches!(node, ListItem(_)) });
+        let lists = mdast.filter(&|node| -> bool { matches!(node, Node::ListItem(_)) });
         let string_lists: Vec<String> = lists.iter().map(|n| n.to_string()).collect();
-        println!("{:?}", string_lists);
+        println!("USING FILTER: {:?}", string_lists);
+
+        let elements: Vec<&markdown::mdast::Node> = mdast
+            .into_iter()
+            .filter(|node| matches!(node, Node::ListItem(li) if li.checked.is_some()))
+            .collect();
+        let string_lists: Vec<String> = elements.iter().map(|n| n.to_string()).collect();
+        println!("list: {:?}", string_lists);
+        println!("full list tree: {:?}", elements[0]);
     }
 
     Ok(())
